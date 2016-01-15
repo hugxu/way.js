@@ -496,6 +496,22 @@
 			repeat.filter = repeat.filter || [];
 			w.dom(wrapper).empty();
 
+			/********update by xhxuhang@gmail.com ***************/
+			var el,oldClass;
+			if(repeat.element.getAttribute("way-css")!=undefined){
+				el=repeat.element;
+			}else if(repeat.element.querySelectorAll('[way-css]')!=undefined){
+				el=repeat.element.querySelectorAll('[way-css]')[0];
+			}
+
+			if(el!=undefined){
+				if(el.getAttribute("way-wrapper-css")==undefined){
+					el.setAttribute("way-wrapper-css",el.className + " ");
+				}
+				oldClass=el.getAttribute("way-wrapper-css");
+			}
+			/********update by xhxuhang@gmail.com ***************/
+
 			for (var key in data) {
 
 				/*
@@ -511,6 +527,13 @@
 				*/
 
 				w.dom(repeat.element).attr(tagPrefix + "-scope", key);
+				
+				/********update by xhxuhang@gmail.com ***************/
+				if(oldClass!=undefined){
+					el.className=oldClass + data[key][el.getAttribute("way-css")];
+				}
+				/********update by xhxuhang@gmail.com ***************/
+				
 				var html = w.dom(repeat.element).get(0).outerHTML;
 				html = html.replace(/\$\$key/gi, key);
 				items.push(html);
